@@ -33,8 +33,8 @@ public final class KeyGenerator {
     }
 
     private void checkArguments(int groupSize, int minGroupSize) {
-        if (groupSize < 3)            throw new IllegalArgumentException();
-        if (minGroupSize < 2)         throw new IllegalArgumentException();
+        if (groupSize < 3) throw new IllegalArgumentException();
+        if (minGroupSize < 2) throw new IllegalArgumentException();
         if (minGroupSize > groupSize) throw new IllegalArgumentException();
     }
 
@@ -43,7 +43,8 @@ public final class KeyGenerator {
     }
 
     private List<BigInteger> generateRelativePrimeNumbers(int count, BigInteger primeNumber) {
-        return generator.getRelativePrimeNumbers(count, primeNumber.add(ONE));
+        final BigInteger min = primeNumber.add(BigInteger.valueOf(100));
+        return generator.getRelativePrimeNumbers(count, min);
     }
 
     private void validateNumbers(List<BigInteger> numbers, BigInteger primeNumber, int minGroupSize) {
@@ -62,7 +63,7 @@ public final class KeyGenerator {
         for (int i = numbers.size() - minGroupSize + 1; i < numbers.size(); i++) {
             right = right.multiply(numbers.get(i));
         }
-        if (left.compareTo(right) >= 0) throw new IllegalArgumentException();
+        if (right.compareTo(left) >= 0) throw new IllegalArgumentException();
     }
 
 
